@@ -1,5 +1,9 @@
 import "./css/base.css";
 
-import { sayHello } from "./js/utils";
+import { newTodo } from "./js/new-todo.js";
+import { cleanUI } from "./js/utils.js";
 
-console.log(sayHello("Hello"));
+
+
+cleanUI();
+newTodo();
