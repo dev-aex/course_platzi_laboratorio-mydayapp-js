@@ -1,5 +1,19 @@
 import { showUI } from "./utils.js";
 
+function editTask(taskli, taskEditInput, taskTextContent) {
+  taskli.classList.add("editing");
+  taskEditInput.focus();
+  taskEditInput.selectionStart = taskEditInput.selectionEnd =
+    taskEditInput.value.length;
+  taskEditInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      taskTextContent.textContent = taskEditInput.value;
+      taskEditInput.setAttribute("value", taskTextContent.textContent);
+      taskli.classList.remove("editing");
+    }
+  });
+}
+
 function newTask(task) {
   const TODO_LIST = document.querySelector(".todo-list");
 
@@ -8,16 +22,22 @@ function newTask(task) {
   let taskContainer = document.createElement("div");
   taskContainer.className = "view";
 
-  let taskInput = document.createElement("input");
-  taskInput.className = "edit";
-  taskInput.setAttribute("value", task);
-
   let taskCheckbox = document.createElement("input");
   taskCheckbox.className = "toggle";
   taskCheckbox.type = "checkbox";
+  taskCheckbox.onclick = () => {
+    taskList.classList.toggle("completed");
+  };
 
   let taskLabel = document.createElement("label");
   taskLabel.textContent = `${task}`;
+  taskLabel.onclick = () => {
+    editTask(taskList, taskInput, taskLabel);
+  };
+
+  let taskInput = document.createElement("input");
+  taskInput.className = "edit";
+  taskInput.setAttribute("value", taskLabel.textContent);
 
   let taskBtn = document.createElement("button");
   taskBtn.className = "destroy";
