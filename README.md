@@ -131,18 +131,18 @@ El modelo de datos recomendado para una tarea es:
 
 Para crear una aplicación de tareas consistente y útil para los usuarios, la aplicación debe cumplir con la siguiente lista de 9 funcionalidades.
 
-### 1. Ocultar las secciones main y footer
+### 1. Ocultar las secciones main y footer ✅
 
 - Cuando no hay tareas, los elementos con ID `#main` y `#footer` deberían estar ocultos.
 
-### 2. Crear una nueva tarea.
+### 2. Crear una nueva tarea ✅
 
 - Se debe crear una nueva tarea se debe usar el input principal de la aplicación.
 - Este input debe enfocarse cuando se cargue la página, preferiblemente utilizando el atributo `autofocus` en el input.
 - Al presionar la tecla Enter la tarea se crea con el estado **pending** y se agrega a la lista de tareas y el input debería quedar en limpio.
 - Asegúrate de usar métodos como `.trim()` para limpiar espacios al inicio o al final y verifica que la tarea no sea un `string` vacío.
 
-### 3. Una tarea
+### 3. Una tarea ✅
 
 Una tarea debería tener 3 posibles interacciones:
 
@@ -150,7 +150,7 @@ Una tarea debería tener 3 posibles interacciones:
 2. Si se hace doble clic en el  `<label>` se activa el modo edición.
 3. Si se hace la acción `:hover` en una tarea se debería mostrar el botón para eliminar (`.destroy`).
 
-### 4. Editando una tarea
+### 4. Editando una tarea ✅
 
 - Cuando el modo edición está activado, se deberían ocultar los otros elementos y se mostrará un input que contiene el título de la tarea pendiente, que debe estar enfocado (`.focus()`).
 - La edición debe guardarse cuando se presione la tecla Enter y salir del modo edición.
