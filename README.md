@@ -157,7 +157,7 @@ Una tarea debería tener 3 posibles interacciones:
 - Asegúrate de usar métodos como `.trim()` limpiar espacios al inicio o al final.
 - Si se presiona la tecla Escape durante la edición, se debe salir del modo edición y descartar cualquier cambio.
 
-### 5. Contador
+### 5. Contador ✅
 
 - En el footer se debería mostrar el número de tareas en estado **pending**.
 - Asegúrese de que el número esté envuelto por una etiqueta `<strong>`.

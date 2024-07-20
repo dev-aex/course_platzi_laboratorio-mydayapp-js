@@ -1,10 +1,11 @@
 import { showUI, cleanUI } from "./utils.js";
+import { countingPendingTask } from "./filter.js";
 
 // Todo list
 const TODO_LIST = document.querySelector(".todo-list");
 
 // Task ID counter
-let taskCounter = JSON.parse(localStorage.getItem("taskCounter") || 0);
+export let taskCounter = JSON.parse(localStorage.getItem("taskCounter")) || 0;
 
 // Task factory
 const createTask = ({ taskID, taskContent, taskStatus }) => ({
@@ -12,21 +13,6 @@ const createTask = ({ taskID, taskContent, taskStatus }) => ({
   taskContent,
   taskStatus,
 });
-
-// New task
-export function newTodo() {
-  const NEW_TODO_INPUT = document.querySelector(".new-todo");
-
-  NEW_TODO_INPUT.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      showUI();
-      if (NEW_TODO_INPUT.value !== "") {
-        newTask(NEW_TODO_INPUT.value.trim(" "));
-      }
-      NEW_TODO_INPUT.value = "";
-    }
-  });
-}
 
 // Create task
 function newTask(task) {
@@ -38,7 +24,6 @@ function newTask(task) {
     taskContent: task,
     taskStatus: "pending",
   });
-
   // Save LocalStorage
   saveLocalStorage(createNewTask);
   createTaskElements(createNewTask, task);
@@ -56,6 +41,7 @@ function reloadTasks(localStorageTask) {
   createTaskElements(createReloadTask, createReloadTask.taskContent);
 }
 
+// Task elements creator
 function createTaskElements(taskObj, task) {
   let taskList = document.createElement("li");
   taskList.id = taskObj.taskID;
@@ -119,15 +105,15 @@ function changeStatus(taskObj) {
   }
 }
 
-// Delete task
+// Delete tasks
 function deleteTask(parentNode) {
-  localStorage.setItem("taskCounter", JSON.stringify(taskCounter));
   localStorage.removeItem(`${parentNode.id}`);
   parentNode.remove();
 
   if (TODO_LIST.childElementCount === 0) {
     cleanUI();
   }
+  countingPendingTask();
 }
 
 // Edit task
@@ -154,11 +140,28 @@ function editTask(task, editInput, taskObj, taskInput) {
   }
 }
 
-export function showTaskLocalStorage() {
-  if (taskCounter !== 0) {
-    for (let i = 1; i <= taskCounter; i++) {
-      let task = JSON.parse(localStorage.getItem(`task${i}`));
-      reloadTasks(task);
+/* Exports */
+
+// New task
+export function newTodo() {
+  const NEW_TODO_INPUT = document.querySelector(".new-todo");
+
+  NEW_TODO_INPUT.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      showUI();
+      if (NEW_TODO_INPUT.value !== "") {
+        newTask(NEW_TODO_INPUT.value.trim());
+        countingPendingTask();
+      }
+      NEW_TODO_INPUT.value = "";
     }
+  });
+}
+
+// Load saved tasks
+export function showTaskLocalStorage() {
+  for (let i = 1; i <= taskCounter; i++) {
+    let task = JSON.parse(localStorage.getItem(`task${i}`));
+    if (task) reloadTasks(task);
   }
 }
