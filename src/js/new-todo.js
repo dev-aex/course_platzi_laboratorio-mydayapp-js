@@ -7,6 +7,8 @@ const TODO_LIST = document.querySelector(".todo-list");
 // Task ID counter
 export let taskCounter = JSON.parse(localStorage.getItem("taskCounter")) || 0;
 
+localStorage.setItem("mydayapp-js", taskCounter);
+
 // Task factory
 const createTask = ({ taskID, taskContent, taskStatus }) => ({
   taskID,
@@ -53,11 +55,17 @@ function createTaskElements(taskObj, task) {
   let taskCheckbox = document.createElement("input");
   taskCheckbox.className = "toggle";
   taskCheckbox.type = "checkbox";
-  taskCheckbox.onclick = () => {
-    let selectedTask = document.querySelector(`#${taskObj.taskID}`);
-    let newStatus = changeStatus(taskObj);
+  if (taskObj.taskStatus === "completed") {
+    taskCheckbox.checked = true;
+  }
+  taskCheckbox.onclick = (e) => {
+    let selectedTask = e.target.parentNode.parentNode;
+    let selectStorageTask = JSON.parse(
+      localStorage.getItem(`${selectedTask.id}`)
+    );
+    let newStatus = changeStatus(selectStorageTask);
     selectedTask.className = `${newStatus}`;
-    saveLocalStorage(taskObj);
+    updateLocalStorage(selectedTask);
   };
 
   let taskLabel = document.createElement("label");
@@ -92,21 +100,23 @@ function saveLocalStorage(newtask) {
   localStorage.setItem(`task${taskCounter}`, JSON.stringify(newtask));
 }
 
-// Change status task
-function changeStatus(taskObj) {
-  if (taskObj.taskStatus == "pending") {
-    taskObj.taskStatus = "completed";
-    saveLocalStorage(taskObj);
-    return "completed";
-  } else if (taskObj.taskStatus == "completed") {
-    taskObj.taskStatus = "pending";
-    saveLocalStorage(taskObj);
-    return "pending";
-  }
+// Update Task
+function updateLocalStorage(task) {
+  let taskContent = task.querySelector(".edit");
+  let updateTask = JSON.parse(localStorage.getItem(`${task.id}`))
+  updateTask.taskStatus = task.className;
+  updateTask.taskContent = taskContent.value;
+  
+  localStorage.setItem(`${task.id}`, `${JSON.stringify(updateTask)}`);
+  countingPendingTask();
 }
 
+// Change status task
+function changeStatus(taskObj) {
+  return taskObj.taskStatus == "pending" ? "completed" : "pending";
+}
 // Delete tasks
-function deleteTask(parentNode) {
+export function deleteTask(parentNode) {
   localStorage.removeItem(`${parentNode.id}`);
   parentNode.remove();
 

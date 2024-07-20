@@ -1,3 +1,5 @@
+import { taskCounter } from "./new-todo.js";
+
 const MAIN_SECTION = document.querySelector(".main");
 const FOOTER_SECTION = document.querySelector(".footer");
 
