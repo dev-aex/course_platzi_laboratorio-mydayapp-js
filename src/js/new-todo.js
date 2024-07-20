@@ -99,14 +99,13 @@ function saveLocalStorage(newtask) {
   localStorage.setItem("taskCounter", JSON.stringify(taskCounter));
   localStorage.setItem(`task${taskCounter}`, JSON.stringify(newtask));
 }
-
 // Update Task
 function updateLocalStorage(task) {
   let taskContent = task.querySelector(".edit");
-  let updateTask = JSON.parse(localStorage.getItem(`${task.id}`))
+  let updateTask = JSON.parse(localStorage.getItem(`${task.id}`));
   updateTask.taskStatus = task.className;
   updateTask.taskContent = taskContent.value;
-  
+
   localStorage.setItem(`${task.id}`, `${JSON.stringify(updateTask)}`);
   countingPendingTask();
 }
@@ -145,6 +144,14 @@ function editTask(task, editInput, taskObj, taskInput) {
           taskObj.taskStatus = "pending";
           localStorage.setItem(`${taskObj.taskID}`, JSON.stringify(taskObj));
         }
+      });
+      editInput.addEventListener("blur", () => {
+        editInput.setAttribute("value", editInput.value);
+        taskObj.taskContent = editInput.value;
+        taskInput.textContent = taskObj.taskContent;
+        task.className = "pending";
+        taskObj.taskStatus = "pending";
+        localStorage.setItem(`${taskObj.taskID}`, JSON.stringify(taskObj));
       });
     }
   }

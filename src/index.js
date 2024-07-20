@@ -20,8 +20,29 @@ document.addEventListener("DOMContentLoaded", () => {
   newTodo();
   showTaskLocalStorage();
   countingPendingTask();
-  CLEAN_COMPLETED_TASKS.addEventListener("click", cleanCompletedTask);
-  SHOW_COMPLETED_TASKS.addEventListener("click", completedTasks);
-  SHOW_PENDING_TASKS.addEventListener("click", pendingTasks);
-  SHOW_ALL_TASKS.addEventListener("click", allTasks);
+  CLEAN_COMPLETED_TASKS.addEventListener("click", () => {
+    cleanCompletedTask();
+    allTasks();
+    SHOW_ALL_TASKS.className = "selected";
+    SHOW_COMPLETED_TASKS.classList.remove("selected");
+    SHOW_PENDING_TASKS.classList.remove("selected");
+  });
+  SHOW_COMPLETED_TASKS.addEventListener("click", () => {
+    completedTasks();
+    SHOW_COMPLETED_TASKS.className = "selected";
+    SHOW_PENDING_TASKS.classList.remove("selected");
+    SHOW_ALL_TASKS.classList.remove("selected");
+  });
+  SHOW_PENDING_TASKS.addEventListener("click", () => {
+    pendingTasks();
+    SHOW_PENDING_TASKS.className = "selected";
+    SHOW_COMPLETED_TASKS.classList.remove("selected");
+    SHOW_ALL_TASKS.classList.remove("selected");
+  });
+  SHOW_ALL_TASKS.addEventListener("click", () => {
+    allTasks();
+    SHOW_ALL_TASKS.className = "selected";
+    SHOW_COMPLETED_TASKS.classList.remove("selected");
+    SHOW_PENDING_TASKS.classList.remove("selected");
+  });
 });

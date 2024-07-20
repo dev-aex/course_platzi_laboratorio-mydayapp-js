@@ -173,7 +173,7 @@ Una tarea debería tener 3 posibles interacciones:
 - El key que se debe usar para el LocalStorage debe ser `mydayapp-js`, esto es importante ya que las [pruebas e2e](#pruebas) van a verificar el LocalStorage con esta la key `mydayapp-js`.
 - NO es necesario persistir estados de la interfaz como por ejemplo guardar el modo de edición. Solo se debe guardar las tareas.
 
-### 8. Filtros y rutas
+### 8. Filtros y rutas ✅
 
 Deben existir tres filtros que funcione desde la URL y funcionan como links en el footer:
 
