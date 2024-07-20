@@ -1,3 +1,7 @@
+# Mi solución
+
+[Live demo](https://dev-aex.github.io/course_platzi_laboratorio-mydayapp-js/)
+
 # MyDayApp - JavaScript
 
 MyDayApp es una aplicación para gestionar tareas de forma sencilla, fácil y en donde pondrás a pruebas tus conocimientos en JS.
